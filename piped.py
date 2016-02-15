@@ -5,6 +5,19 @@ import yaml
 from lxml import html
 import requests
 
+# Class definition for our pipe object:
+class cPipe(object):
+
+  def __init__(self, url, description):
+    self.url = url
+    self.description = description
+
+  def get_url(self):
+    return url
+
+  def get_description(self):
+    return description
+
 # Our load config function:
 def loadConfig():
 
