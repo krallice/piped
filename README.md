@@ -1,2 +1,2 @@
 # piped
-email based python webscraper for tobacco pipes of manhood
+pipe deamon -- email based python webscraper for tobacco pipes of manhood
