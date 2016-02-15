@@ -1,0 +1,9 @@
+---
+
+# config.yaml definition files for piper #
+
+baseURL: "https://www.smokingpipes.com/pipes/new/"
+
+pipeBrands:
+  - neerup
+  - nording
