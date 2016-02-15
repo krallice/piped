@@ -13,10 +13,10 @@ class Pipe(object):
     self.description = description
 
   def get_url(self):
-    return url
+    return self.url
 
   def get_description(self):
-    return description
+    return self.description
 
 # Our load config function:
 def loadConfig():
@@ -41,9 +41,13 @@ def pipedMain():
 
     # Locate the 'NEW' spans:
     newURLs = parentTree.xpath('//span[@class="new"]/following-sibling::a/@href')
-    newNames = parentTree.xpath('//span[@class="new"]/following-sibling::a/text()')
-    print newURLs
-    print newNames
+    newDescriptions = parentTree.xpath('//span[@class="new"]/following-sibling::a/text()')
+
+    pipeList = []
+
+    for i in range(len(newURLs)):
+      pipe = Pipe(newURLs[i], newDescriptions[i])
+      print pipe.get_url()
 
 # Call pipedMain on program entry:
 if __name__ == "__main__":
