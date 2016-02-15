@@ -6,7 +6,7 @@ from lxml import html
 import requests
 
 # Class definition for our pipe object:
-class cPipe(object):
+class Pipe(object):
 
   def __init__(self, url, description):
     self.url = url
