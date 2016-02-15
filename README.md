@@ -1,2 +1,2 @@
 # piped
-pipe scraping daemon
+email based python webscraper for tabacco pipes of manhood
