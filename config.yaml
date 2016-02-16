@@ -1,6 +1,8 @@
 ---
 
-# config.yaml definition files for piper #
+# config.yaml definition files for piped #
+
+cacheFile: p.cache
 
 baseURL: "https://www.smokingpipes.com/pipes/new/"
 
