@@ -1,0 +1,6 @@
+# Requirements:
+
+~ python-pip
+~ python-requests
+~ python-lxml
+~ pip install yaml
