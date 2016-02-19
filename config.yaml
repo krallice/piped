@@ -4,8 +4,16 @@
 
 cacheFile: p.cache
 
+domainTop: "https://www.smokingpipes.com"
+
 baseURL: "https://www.smokingpipes.com/pipes/new/"
 
 pipeBrands:
   - neerup
   - nording
+
+# Email address to send mail from:
+senderAddress: "piped@dom.noclab.com.au"
+
+# Key/Value pair is replaced by privateconfig.yaml (not tracked via git):
+destinationEmails: "dummyemail@example.com"
