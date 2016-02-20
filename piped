@@ -90,10 +90,14 @@ def sendBasicMail(newPipes, senderAddress, destinationEmails, domainTop):
 
 def pipedMain():
 
-  debugMode = 1
-
   config = loadConfig()
+  debugMode = config["debugMode"]
+
+  # Define lists for:
+  #   --  All pipes that are listed NEW on the original site; and
+  #   --  Pipes that are truly new (we've never seen them before):
   pipeList = []
+  newPipes = []
 
   # Loop over each pipe brand, and populate our Pipe class:
   for brand in config["pipeBrands"]:
@@ -126,9 +130,6 @@ def pipedMain():
 
     # Read file into string (scaling should be ok):
     cache = cf.readlines()
-
-    # Build our list of brand new pipes (not previously cached):
-    newPipes = []
 
     # Compare our cache with our pipeList:
     for pipe in pipeList:
