@@ -5,6 +5,7 @@ import os
 import re
 import time
 import yaml
+import signal
 import requests
 from lxml import html
 
@@ -54,6 +55,13 @@ def loadConfig():
   config = openConfig.copy()
   config.update(privateConfig)
   return config
+
+# Super basic signal handling:
+def registerSignals():
+  signal.signal(signal.SIGINT, handleSIGINT)
+
+def handleSIGINT(signum, frame):
+  exit(1)
 
 # Send Basic Email via sendmail, perhaps oneday replace 
 # with a nice MIME templated email:
@@ -119,6 +127,7 @@ def pipedMain():
     # Read file into string (scaling should be ok):
     cache = cf.readlines()
 
+    # Build our list of brand new pipes (not previously cached):
     newPipes = []
 
     # Compare our cache with our pipeList:
@@ -145,5 +154,6 @@ def pipedMain():
 
 # Call pipedMain on program entry:
 if __name__ == "__main__":
+  registerSignals()
   while (True):
     pipedMain()
