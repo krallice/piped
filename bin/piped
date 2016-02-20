@@ -3,7 +3,9 @@
 # Imports:
 import os
 import re
+import time
 import yaml
+import signal
 import requests
 from lxml import html
 
@@ -45,14 +47,21 @@ class Pipe(object):
 # Our load config function:
 def loadConfig():
 
-  with open("config.yaml", "r") as f:
+  with open("/usr/local/etc/piped.conf", "r") as f:
     openConfig = yaml.load(f)
-  with open("privateconfig.yaml", "r") as f:
+  with open("/usr/local/etc/piped-private.conf", "r") as f:
     privateConfig = yaml.load(f)
 
   config = openConfig.copy()
   config.update(privateConfig)
   return config
+
+# Super basic signal handling:
+def registerSignals():
+  signal.signal(signal.SIGINT, handleSIGINT)
+
+def handleSIGINT(signum, frame):
+  exit(1)
 
 # Send Basic Email via sendmail, perhaps oneday replace 
 # with a nice MIME templated email:
@@ -81,10 +90,14 @@ def sendBasicMail(newPipes, senderAddress, destinationEmails, domainTop):
 
 def pipedMain():
 
-  debugMode = 1
-
   config = loadConfig()
+  debugMode = config["debugMode"]
+
+  # Define lists for:
+  #   --  All pipes that are listed NEW on the original site; and
+  #   --  Pipes that are truly new (we've never seen them before):
   pipeList = []
+  newPipes = []
 
   # Loop over each pipe brand, and populate our Pipe class:
   for brand in config["pipeBrands"]:
@@ -118,8 +131,6 @@ def pipedMain():
     # Read file into string (scaling should be ok):
     cache = cf.readlines()
 
-    newPipes = []
-
     # Compare our cache with our pipeList:
     for pipe in pipeList:
       for line in cache:
@@ -139,6 +150,11 @@ def pipedMain():
         print "New Pipes Exist -- Sending Email"
       sendBasicMail(newPipes, config["senderAddress"], config["destinationEmails"], config["domainTop"])
 
+  # Sleep before returning:
+  time.sleep(config["sleepTime"])
+
 # Call pipedMain on program entry:
 if __name__ == "__main__":
-  pipedMain()
+  registerSignals()
+  while (True):
+    pipedMain()
