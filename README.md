@@ -24,3 +24,6 @@ Enable and start the piped daemon:
 systemctl enable piped.service
 systemctl start piped.service
 ```
+
+peruse dem pipes kind sir
+---
