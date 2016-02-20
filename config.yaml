@@ -10,5 +10,6 @@ pipeBrands:
   - nording
 # Email address to send mail from:
 senderAddress: "piped@dom.noclab.com.au"
+sleepTime: 3600
 # Key/Value pair is replaced by privateconfig.yaml (not tracked via git):
 destinationEmails: "dummyemail@example.com"

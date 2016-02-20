@@ -3,6 +3,7 @@
 # Imports:
 import os
 import re
+import time
 import yaml
 import requests
 from lxml import html
@@ -139,6 +140,10 @@ def pipedMain():
         print "New Pipes Exist -- Sending Email"
       sendBasicMail(newPipes, config["senderAddress"], config["destinationEmails"], config["domainTop"])
 
+  # Sleep before returning:
+  time.sleep(config["sleepTime"])
+
 # Call pipedMain on program entry:
 if __name__ == "__main__":
-  pipedMain()
+  while (True):
+    pipedMain()
