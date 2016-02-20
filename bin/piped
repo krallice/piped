@@ -47,9 +47,9 @@ class Pipe(object):
 # Our load config function:
 def loadConfig():
 
-  with open("config.yaml", "r") as f:
+  with open("/usr/local/etc/piped.conf", "r") as f:
     openConfig = yaml.load(f)
-  with open("privateconfig.yaml", "r") as f:
+  with open("/usr/local/etc/piped-private.conf", "r") as f:
     privateConfig = yaml.load(f)
 
   config = openConfig.copy()
