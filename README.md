@@ -24,3 +24,7 @@ Enable and start the piped daemon:
 systemctl enable piped.service
 systemctl start piped.service
 ```
+
+### todo:
++ convert html to templating engine
++ more flexible search params (maybe?)
