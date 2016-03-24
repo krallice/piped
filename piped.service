@@ -3,6 +3,8 @@ Description=Tobacco Pipe Webscraper
 
 [Service]
 ExecStart=/usr/local/bin/piped
+Restart=on-failure
+RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
