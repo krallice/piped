@@ -3,6 +3,7 @@
 # Imports:
 import os
 import re
+import sys
 import time
 import yaml
 import signal
@@ -98,6 +99,7 @@ def pipedMain():
   #   --  Pipes that are truly new (we've never seen them before):
   pipeList = []
   newPipes = []
+  pricesClean = []
 
   # Loop over each pipe brand, and populate our Pipe class:
   for brand in config["pipeBrands"]:
@@ -110,15 +112,25 @@ def pipedMain():
 
     # Locate the 'NEW' spans:
     newURLs = parentTree.xpath('//span[@class="new"]/following-sibling::a/@href')
+    for p in newURLs: print p
     newDescriptions = parentTree.xpath('//span[@class="new"]/following-sibling::a/text()')
+    for p in newDescriptions: print p
     newImgs = parentTree.xpath('//span[@class="new"]/../preceding-sibling::div/a/img/@src')
-    newPrices = parentTree.xpath('//span[@class="new"]/../../following-sibling::div/div/following-sibling::div/div/sup/following-sibling::text()')
-
+    #newPrices = parentTree.xpath('//span[@class="new"]/../../following-sibling::div/div/following-sibling::div/div/sup/following-sibling::text()')
+    newPrices = parentTree.xpath('//span[@class="new"]/../../following-sibling::div[@class="price-and-detail"]/div[@class="price"]/text()')
+    for p in newPrices:
+      print "extracting now.."
+      # Clean out whitespace:
+      m = re.sub('[\n\t\r ]', '', p)
+      if m:
+        # print "yep"
+        pricesClean.append(m)
+    
     # Populate the Pipe class:
     for i in range(len(newURLs)):
       # Strip out the strange whitespace out of our prices:
-      newPrices[i] = re.sub('[\n\t\r]', '', newPrices[i])
-      pipe = Pipe(newURLs[i], brand, newDescriptions[i], newImgs[i], newPrices[i])
+      #newPrices[i] = re.sub('[\n\t\r]', '', newPrices[i])
+      pipe = Pipe(newURLs[i], brand, newDescriptions[i], newImgs[i], pricesClean[i])
       pipeList.append(pipe)
       print pipe.get_url()
 
