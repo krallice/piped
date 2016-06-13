@@ -112,18 +112,22 @@ def pipedMain():
 
     # Locate the 'NEW' spans:
     newURLs = parentTree.xpath('//span[@class="new"]/following-sibling::a/@href')
-    for p in newURLs: print p
+    if debugMode == 1:
+      for p in newURLs: print p
     newDescriptions = parentTree.xpath('//span[@class="new"]/following-sibling::a/text()')
-    for p in newDescriptions: print p
+    if debugMode == 1:
+      for p in newDescriptions: print p
     newImgs = parentTree.xpath('//span[@class="new"]/../preceding-sibling::div/a/img/@src')
     #newPrices = parentTree.xpath('//span[@class="new"]/../../following-sibling::div/div/following-sibling::div/div/sup/following-sibling::text()')
     newPrices = parentTree.xpath('//span[@class="new"]/../../following-sibling::div[@class="price-and-detail"]/div[@class="price"]/text()')
     for p in newPrices:
-      print "extracting now.."
+      if debugMode == 1:
+        print "extracting now.."
       # Clean out whitespace:
       m = re.sub('[\n\t\r ]', '', p)
       if m:
-        # print "yep"
+        if debugMode == 1:
+          print "yep"
         pricesClean.append(m)
     
     # Populate the Pipe class:
@@ -132,7 +136,8 @@ def pipedMain():
       #newPrices[i] = re.sub('[\n\t\r]', '', newPrices[i])
       pipe = Pipe(newURLs[i], brand, newDescriptions[i], newImgs[i], pricesClean[i])
       pipeList.append(pipe)
-      print pipe.get_url()
+      if debugMode == 1:
+        print pipe.get_url()
 
   # Open our cache file:
   with open(config["cacheFile"], "a+") as cf:

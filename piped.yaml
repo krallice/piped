@@ -2,7 +2,7 @@
 
 # config.yaml definition files for piped #
 
-debugMode: 1
+debugMode: 0
 cacheFile: "/var/lib/piped/piped.cache"
 domainTop: "https://www.smokingpipes.com"
 baseURL: "https://www.smokingpipes.com/pipes/new/"
